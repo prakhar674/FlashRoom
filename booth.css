@@ -1,0 +1,846 @@
+/* =========================================================
+   FLASHROOM — 2 PERSON BOOTH
+========================================================= */
+
+.booth-page {
+    min-height: 100vh;
+    padding: 14px;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            #421276,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            #73164f,
+            transparent 35%
+        ),
+        #08050d;
+}
+
+.booth-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.booth-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.booth-title {
+    font-size: 25px;
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            90deg,
+            #c77dff,
+            #ff78c8
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+.booth-room {
+    padding: 7px 11px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    color: #dcb7ff;
+
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   MAIN BOOTH
+========================================================= */
+
+.booth-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr) 300px;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   CAMERA AREA
+========================================================= */
+
+.camera-area {
+    position: relative;
+
+    min-width: 0;
+
+    padding: 10px;
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter: blur(16px);
+
+    box-shadow:
+        0 0 40px rgba(142,68,255,.18);
+}
+
+.camera-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   CAMERA CARD
+========================================================= */
+
+.person-camera {
+    position: relative;
+
+    overflow: hidden;
+
+    aspect-ratio: 4 / 5;
+
+    min-height: 420px;
+
+    border-radius: 18px;
+
+    background: #030303;
+
+    border:
+        1px solid rgba(255,255,255,.15);
+}
+
+.person-camera video {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    background: #020202;
+}
+
+#localVideo {
+    transform: scaleX(-1);
+}
+
+#remoteVideo {
+    transform: none;
+}
+
+
+/* =========================================================
+   CAMERA TOP LABEL
+========================================================= */
+
+.camera-label {
+    position: absolute;
+
+    top: 10px;
+    left: 10px;
+
+    z-index: 2;
+
+    padding: 7px 10px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(0,0,0,.48);
+
+    backdrop-filter: blur(8px);
+
+    font-size: 11px;
+
+    color: white;
+}
+
+.camera-label .status-dot {
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 5px;
+
+    border-radius: 50%;
+
+    background: #72f5a2;
+
+    box-shadow:
+        0 0 10px #72f5a2;
+}
+
+
+/* =========================================================
+   CAMERA OFF / WAITING
+========================================================= */
+
+.camera-placeholder {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(142,68,255,.14),
+            rgba(0,0,0,.65)
+        );
+}
+
+.placeholder-icon {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.08);
+
+    font-size: 29px;
+
+    margin-bottom: 10px;
+}
+
+.camera-placeholder strong {
+    font-size: 14px;
+}
+
+.camera-placeholder span {
+    margin-top: 5px;
+
+    color: #918598;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   CAMERA CONTROLS
+========================================================= */
+
+.camera-controls {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+.camera-control {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(255,255,255,.13);
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.08);
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        background .15s ease;
+}
+
+.camera-control:hover {
+    transform: translateY(-2px);
+
+    background:
+        rgba(255,255,255,.14);
+}
+
+.camera-control.active {
+    background:
+        rgba(142,68,255,.3);
+
+    border-color:
+        rgba(199,125,255,.6);
+}
+
+
+/* =========================================================
+   MAIN CAPTURE BUTTON
+========================================================= */
+
+.booth-capture {
+    width: 68px;
+    height: 68px;
+
+    border-radius: 50%;
+
+    border: 5px solid white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e44ff,
+            #e64fbc
+        );
+
+    box-shadow:
+        0 0 28px rgba(190,90,255,.55);
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.booth-capture:hover {
+    transform: scale(1.07);
+
+    box-shadow:
+        0 0 38px rgba(190,90,255,.75);
+}
+
+.booth-capture:active {
+    transform: scale(.94);
+}
+
+
+/* =========================================================
+   SIDE PANEL
+========================================================= */
+
+.booth-side {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+.chat-panel {
+    min-height: 350px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter: blur(16px);
+}
+
+.chat-header {
+    padding: 13px 14px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.09);
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.chat-status {
+    margin-top: 3px;
+
+    color: #918598;
+
+    font-size: 10px;
+}
+
+.chat-messages {
+    flex: 1;
+
+    min-height: 220px;
+
+    overflow-y: auto;
+
+    padding: 12px;
+}
+
+.chat-empty {
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #746a7b;
+
+    text-align: center;
+
+    font-size: 11px;
+}
+
+.chat-message {
+    max-width: 85%;
+
+    margin-bottom: 8px;
+
+    padding: 9px 11px;
+
+    border-radius: 14px;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+.chat-message.mine {
+    margin-left: auto;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(142,68,255,.55),
+            rgba(230,79,188,.4)
+        );
+}
+
+.chat-message-name {
+    margin-bottom: 3px;
+
+    color: #d5b1ff;
+
+    font-size: 9px;
+    font-weight: bold;
+}
+
+.chat-input-area {
+    display: flex;
+
+    gap: 7px;
+
+    padding: 10px;
+
+    border-top:
+        1px solid rgba(255,255,255,.09);
+}
+
+.chat-input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 10px;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    background:
+        rgba(0,0,0,.25);
+
+    color: white;
+}
+
+.chat-send {
+    width: 42px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e44ff,
+            #e64fbc
+        );
+}
+
+
+/* =========================================================
+   CALL CONTROLS
+========================================================= */
+
+.call-panel {
+    padding: 12px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+}
+
+.call-title {
+    margin-bottom: 9px;
+
+    color: #cfc2d5;
+
+    font-size: 12px;
+}
+
+.call-buttons {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 7px;
+}
+
+.call-button {
+    padding: 10px 5px;
+
+    border-radius: 11px;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.06);
+
+    font-size: 11px;
+}
+
+.call-button:hover {
+    background:
+        rgba(255,255,255,.12);
+}
+
+.call-button.end {
+    background:
+        rgba(255,65,95,.18);
+
+    border-color:
+        rgba(255,65,95,.3);
+}
+
+
+/* =========================================================
+   PHOTO STRIP
+========================================================= */
+
+.booth-strip {
+    margin-top: 10px;
+
+    padding: 11px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid rgba(255,255,255,.11);
+}
+
+.strip-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color: #d7c9df;
+
+    font-size: 11px;
+}
+
+.strip-count {
+    color: #a994b0;
+}
+
+.strip-photos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 6px;
+}
+
+.strip-photo {
+    aspect-ratio: 3 / 4;
+
+    overflow: hidden;
+
+    border-radius: 8px;
+
+    background:
+        rgba(0,0,0,.35);
+
+    border:
+        1px dashed rgba(255,255,255,.16);
+}
+
+.strip-photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+.booth-countdown {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 20;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    font-size: 100px;
+    font-weight: 900;
+
+    text-shadow:
+        0 0 30px rgba(0,0,0,.8);
+
+    transform: scale(.7);
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+.booth-countdown.show {
+    opacity: 1;
+
+    transform: scale(1);
+}
+
+
+/* =========================================================
+   CONNECTION STATUS
+========================================================= */
+
+.connection-status {
+    padding: 9px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    color: #b7a9bc;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    font-size: 10px;
+}
+
+.connection-status.connected {
+    color: #a7f0c6;
+
+    border-color:
+        rgba(70,240,150,.18);
+}
+
+.connection-status.disconnected {
+    color: #ffadb9;
+
+    border-color:
+        rgba(255,70,100,.18);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .booth-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .booth-side {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .chat-panel {
+        grid-column: 1 / -1;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .booth-page {
+        padding: 8px;
+    }
+
+    .booth-title {
+        font-size: 21px;
+    }
+
+    .booth-room {
+        font-size: 9px;
+    }
+
+    .camera-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+
+    .person-camera {
+        min-height: 300px;
+
+        aspect-ratio: 3 / 4;
+    }
+
+    .camera-label {
+        font-size: 9px;
+
+        padding: 6px 7px;
+    }
+
+    .camera-controls {
+        gap: 6px;
+    }
+
+    .camera-control {
+        width: 40px;
+        height: 40px;
+    }
+
+    .booth-capture {
+        width: 60px;
+        height: 60px;
+    }
+
+    .booth-side {
+        display: flex;
+    }
+
+    .chat-panel {
+        min-height: 300px;
+    }
+
+    .strip-photos {
+        grid-template-columns:
+            repeat(4, 1fr);
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .person-camera {
+        min-height: 250px;
+    }
+
+    .booth-capture {
+        width: 55px;
+        height: 55px;
+    }
+
+    .camera-control {
+        width: 36px;
+        height: 36px;
+    }
+}
