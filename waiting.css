@@ -1,0 +1,459 @@
+/* =========================================================
+   FLASHROOM — WAITING ROOM
+========================================================= */
+
+.waiting-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.waiting-container {
+    width: 100%;
+    max-width: 520px;
+    padding: 28px;
+    border-radius: 28px;
+
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 0 50px rgba(142, 68, 255, 0.25);
+
+    animation: fadeUp 0.5s ease;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.waiting-header {
+    text-align: center;
+}
+
+.waiting-icon {
+    font-size: 52px;
+    margin-bottom: 8px;
+
+    animation:
+        waitingPulse 2s infinite ease-in-out;
+}
+
+.waiting-title {
+    font-size: 32px;
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            90deg,
+            #c77dff,
+            #ff78c8
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+.waiting-subtitle {
+    margin-top: 8px;
+    color: #b9adbf;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   USER CARD
+========================================================= */
+
+.user-card {
+    margin-top: 24px;
+    padding: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e44ff,
+            #e64fbc
+        );
+
+    box-shadow:
+        0 0 25px rgba(183, 92, 255, 0.4);
+}
+
+.user-info {
+    min-width: 0;
+}
+
+.user-label {
+    color: #8f8396;
+    font-size: 11px;
+}
+
+.user-name {
+    margin-top: 4px;
+
+    color: white;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   ROOM TICKET
+========================================================= */
+
+.room-ticket {
+    position: relative;
+
+    margin-top: 18px;
+    padding: 18px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(142, 68, 255, 0.18),
+            rgba(255, 120, 200, 0.1)
+        );
+
+    border:
+        1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.room-ticket::before,
+.room-ticket::after {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+
+    width: 14px;
+    height: 14px;
+
+    border-radius: 50%;
+
+    background: #100914;
+}
+
+.room-ticket::before {
+    left: -8px;
+    transform: translateY(-50%);
+}
+
+.room-ticket::after {
+    right: -8px;
+    transform: translateY(-50%);
+}
+
+.ticket-label {
+    text-align: center;
+
+    color: #9d91a5;
+
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.ticket-code {
+    margin-top: 7px;
+
+    text-align: center;
+
+    color: #e2b7ff;
+
+    font-size: 25px;
+    font-weight: 800;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================================================
+   INVITE
+========================================================= */
+
+.invite-section {
+    margin-top: 20px;
+}
+
+.section-title {
+    margin-bottom: 10px;
+
+    color: #d9cde0;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.invite-row {
+    display: flex;
+    gap: 8px;
+}
+
+.invite-row input {
+    flex: 1;
+    min-width: 0;
+}
+
+.copy-button {
+    flex-shrink: 0;
+
+    padding: 12px 15px;
+
+    border: none;
+    border-radius: 13px;
+
+    color: white;
+
+    background:
+        rgba(255, 255, 255, 0.09);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.12);
+}
+
+
+/* =========================================================
+   BOOTH CHOICE
+========================================================= */
+
+.booth-choice {
+    margin-top: 22px;
+}
+
+.choice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+}
+
+.choice-card {
+    position: relative;
+
+    padding: 18px 12px;
+
+    text-align: center;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.11);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.choice-card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(199, 125, 255, 0.55);
+
+    box-shadow:
+        0 0 25px rgba(142, 68, 255, 0.18);
+}
+
+.choice-card.active {
+    border-color:
+        rgba(199, 125, 255, 0.8);
+
+    background:
+        rgba(142, 68, 255, 0.13);
+
+    box-shadow:
+        0 0 25px rgba(142, 68, 255, 0.22);
+}
+
+.choice-icon {
+    font-size: 30px;
+}
+
+.choice-name {
+    margin-top: 8px;
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.choice-description {
+    margin-top: 5px;
+
+    color: #918598;
+
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   ACTION BUTTON
+========================================================= */
+
+.waiting-action {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 15px;
+
+    border: none;
+    border-radius: 15px;
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    background:
+        linear-gradient(
+            90deg,
+            #8e44ff,
+            #e64fbc
+        );
+
+    box-shadow:
+        0 0 25px rgba(183, 92, 255, 0.3);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.waiting-action:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 35px rgba(183, 92, 255, 0.45);
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.waiting-status {
+    margin-top: 15px;
+
+    padding: 12px;
+
+    text-align: center;
+
+    border-radius: 14px;
+
+    background:
+        rgba(60, 255, 160, 0.06);
+
+    border:
+        1px solid rgba(60, 255, 160, 0.12);
+
+    color: #a8eec9;
+
+    font-size: 12px;
+}
+
+.waiting-status.waiting {
+    color: #d0c2d7;
+
+    background:
+        rgba(255, 255, 255, 0.05);
+
+    border-color:
+        rgba(255, 255, 255, 0.09);
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes waitingPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .waiting-page {
+        padding: 10px;
+    }
+
+    .waiting-container {
+        padding: 22px 18px;
+        border-radius: 23px;
+    }
+
+    .waiting-title {
+        font-size: 28px;
+    }
+
+    .choice-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ticket-code {
+        font-size: 21px;
+    }
+}
