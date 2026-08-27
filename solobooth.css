@@ -1,0 +1,589 @@
+/* =========================================================
+   FLASHROOM — SOLO BOOTH
+========================================================= */
+
+.solo-page {
+    min-height: 100vh;
+    padding: 16px;
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            #421276,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            #73164f,
+            transparent 35%
+        ),
+        #08050d;
+
+    color: white;
+}
+
+.solo-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.solo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.solo-title {
+    font-size: 26px;
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            90deg,
+            #c77dff,
+            #ff78c8
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.solo-back {
+    padding: 9px 13px;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.12);
+
+    color: white;
+    background: rgba(255,255,255,.07);
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.solo-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+
+    gap: 15px;
+}
+
+
+/* =========================================================
+   CAMERA CARD
+========================================================= */
+
+.camera-card {
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 500px;
+
+    border-radius: 24px;
+
+    background: #030303;
+
+    border:
+        1px solid rgba(255,255,255,.14);
+
+    box-shadow:
+        0 0 40px rgba(142,68,255,.2);
+}
+
+#soloVideo {
+    width: 100%;
+    height: 100%;
+
+    min-height: 500px;
+
+    display: block;
+
+    object-fit: cover;
+
+    transform: scaleX(-1);
+
+    background: #020202;
+}
+
+
+/* =========================================================
+   CAMERA OVERLAY
+========================================================= */
+
+.camera-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+}
+
+.camera-top {
+    position: absolute;
+
+    top: 14px;
+    left: 14px;
+    right: 14px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.camera-status {
+    padding: 7px 10px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(0,0,0,.45);
+
+    backdrop-filter: blur(10px);
+
+    font-size: 11px;
+}
+
+.live-dot {
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 5px;
+
+    border-radius: 50%;
+
+    background: #ff5b83;
+
+    box-shadow:
+        0 0 10px #ff5b83;
+}
+
+
+/* =========================================================
+   CAMERA BOTTOM
+========================================================= */
+
+.camera-bottom {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding: 35px 15px 15px;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0,0,0,.8)
+        );
+
+    display: flex;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   CAPTURE BUTTON
+========================================================= */
+
+.capture-button {
+    width: 76px;
+    height: 76px;
+
+    border-radius: 50%;
+
+    border: 5px solid white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e44ff,
+            #e64fbc
+        );
+
+    box-shadow:
+        0 0 30px rgba(190,90,255,.55);
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.capture-button:hover {
+    transform: scale(1.06);
+
+    box-shadow:
+        0 0 40px rgba(190,90,255,.75);
+}
+
+.capture-button:active {
+    transform: scale(.94);
+}
+
+
+/* =========================================================
+   TOOLS PANEL
+========================================================= */
+
+.solo-tools {
+    padding: 16px;
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter: blur(18px);
+}
+
+.tools-heading {
+    margin-bottom: 13px;
+
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   COLOUR PALETTE
+========================================================= */
+
+.palette {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+}
+
+.palette-button {
+    height: 38px;
+
+    border-radius: 11px;
+
+    border:
+        2px solid transparent;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        border-color .15s ease;
+}
+
+.palette-button:hover {
+    transform: scale(1.06);
+}
+
+.palette-button.active {
+    border-color: white;
+
+    box-shadow:
+        0 0 15px rgba(255,255,255,.3);
+}
+
+
+/* =========================================================
+   DESIGN OPTIONS
+========================================================= */
+
+.design-options {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 8px;
+}
+
+.design-button {
+    padding: 11px 8px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.06);
+}
+
+.design-button.active {
+    border-color:
+        rgba(199,125,255,.7);
+
+    background:
+        rgba(142,68,255,.16);
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+.countdown {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+
+    font-size: 100px;
+    font-weight: 900;
+
+    color: white;
+
+    text-shadow:
+        0 0 25px rgba(0,0,0,.8);
+
+    opacity: 0;
+
+    transform: scale(.7);
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+.countdown.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+/* =========================================================
+   PHOTO STRIP PREVIEW
+========================================================= */
+
+.photo-strip {
+    margin-top: 15px;
+
+    padding: 15px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+}
+
+.photo-strip-title {
+    margin-bottom: 10px;
+
+    color: #d7c9df;
+
+    font-size: 13px;
+}
+
+.photo-strip-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+}
+
+.photo-slot {
+    position: relative;
+
+    aspect-ratio: 3 / 4;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background:
+        rgba(0,0,0,.4);
+
+    border:
+        1px dashed rgba(255,255,255,.2);
+}
+
+.photo-slot img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.photo-slot-number {
+    position: absolute;
+
+    top: 6px;
+    left: 6px;
+
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(0,0,0,.5);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.solo-controls {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 12px;
+}
+
+.solo-control {
+    flex: 1;
+
+    padding: 11px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.07);
+}
+
+.solo-control:hover {
+    background:
+        rgba(255,255,255,.12);
+}
+
+
+/* =========================================================
+   CAMERA PERMISSION MESSAGE
+========================================================= */
+
+.camera-message {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    text-align: center;
+
+    background:
+        rgba(5,3,8,.92);
+
+    z-index: 5;
+}
+
+.camera-message-icon {
+    font-size: 45px;
+
+    margin-bottom: 12px;
+}
+
+.camera-message h3 {
+    font-size: 18px;
+}
+
+.camera-message p {
+    margin-top: 7px;
+
+    color: #a99dab;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 750px) {
+
+    .solo-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .camera-card,
+    #soloVideo {
+        min-height: 65vh;
+    }
+
+    .solo-tools {
+        padding: 14px;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .solo-page {
+        padding: 9px;
+    }
+
+    .solo-title {
+        font-size: 22px;
+    }
+
+    .camera-card,
+    #soloVideo {
+        min-height: 58vh;
+    }
+
+    .capture-button {
+        width: 68px;
+        height: 68px;
+    }
+
+    .photo-strip-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .palette-button {
+        height: 34px;
+    }
+}
