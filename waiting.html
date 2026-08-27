@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashRoom — Waiting Room</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
+            background:
+                radial-gradient(circle at 15% 10%, #421276, transparent 35%),
+                radial-gradient(circle at 90% 90%, #73164f, transparent 30%),
+                #08050d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .room {
+            width: 100%;
+            max-width: 470px;
+            padding: 28px;
+            border-radius: 28px;
+            background: rgba(255,255,255,0.075);
+            border: 1px solid rgba(255,255,255,0.14);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 0 50px rgba(153, 62, 255, 0.25);
+        }
+
+        .top {
+            text-align: center;
+        }
+
+        .camera-icon {
+            font-size: 50px;
+        }
+
+        h1 {
+            margin-top: 8px;
+            font-size: 32px;
+            background: linear-gradient(90deg, #c77dff, #ff78c8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome {
+            margin-top: 8px;
+            color: #cfc6d8;
+        }
+
+        .profile {
+            margin-top: 25px;
+            padding: 16px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.06);
+            text-align: center;
+        }
+
+        .avatar {
+            width: 62px;
+            height: 62px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            background: linear-gradient(135deg, #8e44ff, #e64fbc);
+            box-shadow: 0 0 25px rgba(204, 83, 255, 0.4);
+        }
+
+        #usernameDisplay {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-top: 24px;
+        }
+
+        .section-title {
+            margin-bottom: 10px;
+            color: #d9cde2;
+            font-size: 14px;
+        }
+
+        .room-code {
+            padding: 16px;
+            border-radius: 15px;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 23px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #e0a8ff;
+        }
+
+        .buttons {
+            display: grid;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: linear-gradient(90deg, #8e44ff, #e64fbc);
+            box-shadow: 0 0 22px rgba(177,75,255,0.3);
+        }
+
+        button.secondary {
+            background: rgba(255,255,255,0.09);
+            box-shadow: none;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .status {
+            margin-top: 22px;
+            padding: 14px;
+            border-radius: 15px;
+            text-align: center;
+            color: #b9ffdb;
+            background: rgba(60,255,160,0.07);
+            border: 1px solid rgba(60,255,160,0.15);
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 22px;
+            text-align: center;
+            color: #807487;
+            font-size: 12px;
+        }
+
+        @media (max-width: 400px) {
+            .room {
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="room">
+
+        <div class="top">
+            <div class="camera-icon">📸</div>
+            <h1>Waiting Room</h1>
+            <p class="welcome">
+                Welcome to your FlashRoom
+            </p>
+        </div>
+
+        <div class="profile">
+            <div class="avatar">😎</div>
+            <div id="usernameDisplay">Guest</div>
+        </div>
+
+        <div class="section">
+
+            <div class="section-title">
+                YOUR ROOM CODE
+            </div>
+
+            <div class="room-code" id="roomCode">
+                FR-0000
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <button onclick="createRoom()">
+                ✨ Create Photo Room
+            </button>
+
+            <button
+                class="secondary"
+                onclick="joinRoom()">
+                🚪 Join a Room
+            </button>
+
+            <button
+                class="secondary"
+                onclick="startSolo()">
+                📸 Solo Booth
+            </button>
+
+        </div>
+
+        <div class="status" id="status">
+            Waiting for your next snap...
+        </div>
+
+        <div class="footer">
+            FlashRoom • Capture the vibe ✨
+        </div>
+
+    </main>
+
+    <script>
+
+        const username =
+            localStorage.getItem("flashroom_username") || "Guest";
+
+        document.getElementById("usernameDisplay").textContent =
+            username;
+
+
+        function generateRoomCode() {
+
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+            let code = "";
+
+            for (let i = 0; i < 4; i++) {
+                code += chars[Math.floor(Math.random() * chars.length)];
+            }
+
+            return "FR-" + code;
+        }
+
+
+        function createRoom() {
+
+            const roomCode = generateRoomCode();
+
+            localStorage.setItem(
+                "flashroom_room",
+                roomCode
+            );
+
+            document.getElementById("roomCode").textContent =
+                roomCode;
+
+            document.getElementById("status").textContent =
+                "Room created! Waiting for your friend... 👥";
+
+            setTimeout(() => {
+                window.location.href = "booth.html";
+            }, 700);
+        }
+
+
+        function joinRoom() {
+
+            const code = prompt(
+                "Enter your FlashRoom code:"
+            );
+
+            if (!code) return;
+
+            localStorage.setItem(
+                "flashroom_room",
+                code.toUpperCase().trim()
+            );
+
+            window.location.href = "booth.html";
+        }
+
+
+        function startSolo() {
+
+            window.location.href =
+                "solobooth.html";
+        }
+
+    </script>
+
+</body>
+</html>
