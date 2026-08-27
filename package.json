@@ -1,0 +1,13 @@
+{
+  "name": "flashroom",
+  "version": "1.0.0",
+  "description": "FlashRoom - A 2-person online photo booth",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}
