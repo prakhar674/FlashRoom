@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashRoom — Photo Booth</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #3b126b, transparent 35%),
+                radial-gradient(circle at bottom right, #6d174f, transparent 30%),
+                #08050d;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 430px;
+            padding: 35px 25px;
+            text-align: center;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 28px;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 0 45px rgba(160, 60, 255, 0.25);
+        }
+
+        .icon {
+            font-size: 65px;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 42px;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #c77dff, #ff7ac8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            margin-top: 10px;
+            color: #cfc4d8;
+            font-size: 15px;
+        }
+
+        .name-box {
+            margin-top: 30px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            outline: none;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 16px;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #8e44ff, #e64fbc);
+            box-shadow: 0 0 25px rgba(177, 75, 255, 0.35);
+            transition: 0.25s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(220, 90, 255, 0.55);
+        }
+
+        .footer {
+            margin-top: 25px;
+            color: #8f8497;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <div class="icon">📸</div>
+
+        <h1>FlashRoom</h1>
+
+        <p class="tagline">
+            Capture the moment. Keep the vibe.
+        </p>
+
+        <div class="name-box">
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter your name"
+                maxlength="20"
+            >
+
+            <button onclick="enterFlashRoom()">
+                Enter FlashRoom ✨
+            </button>
+        </div>
+
+        <p class="footer">
+            Your virtual photo booth
+        </p>
+
+    </main>
+
+    <script>
+        function enterFlashRoom() {
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            if (!username) {
+                alert("Please enter your name 📸");
+                return;
+            }
+
+            localStorage.setItem("flashroom_username", username);
+
+            window.location.href = "waiting.html";
+        }
+    </script>
+
+</body>
+</html>
