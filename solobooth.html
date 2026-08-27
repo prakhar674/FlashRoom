@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FlashRoom — Solo Booth</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 20% 10%, #451276, transparent 35%),
+                radial-gradient(circle at 90% 90%, #74184f, transparent 35%),
+                #08050d;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 16px;
+        }
+
+        .app {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .title {
+            font-size: 25px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #c77dff, #ff78c8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .room-code {
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            color: #dba7ff;
+            font-size: 12px;
+        }
+
+        .camera-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            max-height: 70vh;
+            overflow: hidden;
+            border-radius: 25px;
+            background: #000;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 0 40px rgba(160,60,255,0.3);
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        video.mirror {
+            transform: scaleX(-1);
+        }
+
+        .flash {
+            position: absolute;
+            inset: 0;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .flash.active {
+            animation: flashEffect 0.35s ease;
+        }
+
+        @keyframes flashEffect {
+            0% {
+                opacity: 0;
+            }
+
+            30% {
+                opacity: 0.95;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .countdown {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 100px;
+            font-weight: bold;
+            text-shadow: 0 0 30px #000;
+            pointer-events: none;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px 10px;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .capture {
+            background: linear-gradient(90deg, #8e44ff, #e64fbc);
+            box-shadow: 0 0 25px rgba(190,70,255,0.35);
+        }
+
+        .secondary {
+            background: rgba(255,255,255,0.09);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .strip-section {
+            margin-top: 20px;
+        }
+
+        .strip-title {
+            margin-bottom: 10px;
+            color: #d8c9df;
+            font-size: 14px;
+        }
+
+        .strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .photo {
+            aspect-ratio: 3 / 4;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .empty {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #716879;
+            font-size: 22px;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 12px;
+            color: #a99caf;
+            font-size: 13px;
+        }
+
+        canvas {
+            display: none;
+        }
+
+        @media (max-width: 500px) {
+
+            .title {
+                font-size: 21px;
+            }
+
+            .room-code {
+                font-size: 10px;
+            }
+
+            .countdown {
+                font-size: 80px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .strip {
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <header>
+
+        <div class="title">
+            📸 FlashRoom
+        </div>
+
+        <div class="room-code" id="roomCode">
+            SOLO
+        </div>
+
+    </header>
+
+
+    <section class="camera-box">
+
+        <video
+            id="camera"
+            autoplay
+            playsinline>
+        </video>
+
+        <div
+            class="countdown"
+            id="countdown">
+        </div>
+
+        <div
+            class="flash"
+            id="flash">
+        </div>
+
+    </section>
+
+
+    <div class="controls">
+
+        <button
+            class="secondary"
+            onclick="flipCamera()">
+            🔄 Flip
+        </button>
+
+        <button
+            class="capture"
+            onclick="takePhoto()">
+            📸 Capture
+        </button>
+
+        <button
+            class="secondary"
+            onclick="stopCamera()">
+            ⏹ Stop
+        </button>
+
+    </div>
+
+
+    <section class="strip-section">
+
+        <div class="strip-title">
+            Your 4-photo strip
+        </div>
+
+        <div class="strip">
+
+            <div class="photo" id="photo1">
+                <div class="empty">1</div>
+            </div>
+
+            <div class="photo" id="photo2">
+                <div class="empty">2</div>
+            </div>
+
+            <div class="photo" id="photo3">
+                <div class="empty">3</div>
+            </div>
+
+            <div class="photo" id="photo4">
+                <div class="empty">4</div>
+            </div>
+
+        </div>
+
+        <p class="message" id="message">
+            Take 4 photos to complete your strip ✨
+        </p>
+
+    </section>
+
+
+    <canvas id="canvas"></canvas>
+
+</div>
+
+
+<script>
+
+    const video =
+        document.getElementById("camera");
+
+    const canvas =
+        document.getElementById("canvas");
+
+    const countdown =
+        document.getElementById("countdown");
+
+    const flash =
+        document.getElementById("flash");
+
+    const message =
+        document.getElementById("message");
+
+    const roomCode =
+        localStorage.getItem("flashroom_room") || "SOLO";
+
+    document.getElementById("roomCode").textContent =
+        roomCode;
+
+
+    let stream = null;
+
+    let facingMode = "user";
+
+    let photos = [];
+
+
+    async function startCamera() {
+
+        try {
+
+            if (stream) {
+
+                stream.getTracks().forEach(
+                    track => track.stop()
+                );
+
+            }
+
+            stream =
+                await navigator.mediaDevices.getUserMedia({
+
+                    video: {
+                        facingMode: facingMode
+                    },
+
+                    audio: false
+
+                });
+
+            video.srcObject = stream;
+
+            if (facingMode === "user") {
+
+                video.classList.add("mirror");
+
+            } else {
+
+                video.classList.remove("mirror");
+
+            }
+
+            message.textContent =
+                "Camera ready — let's snap! 📸";
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "Camera permission is required.";
+
+            alert(
+                "Please allow camera access for FlashRoom."
+            );
+
+        }
+
+    }
+
+
+    function flipCamera() {
+
+        facingMode =
+            facingMode === "user"
+                ? "environment"
+                : "user";
+
+        startCamera();
+
+    }
+
+
+    function takePhoto() {
+
+        if (!stream) {
+
+            startCamera();
+
+            return;
+
+        }
+
+        if (photos.length >= 4) {
+
+            message.textContent =
+                "Your 4-photo strip is complete! ✨";
+
+            return;
+
+        }
+
+        runCountdown();
+
+    }
+
+
+    function runCountdown() {
+
+        let number = 3;
+
+        countdown.textContent = number;
+
+        const timer =
+            setInterval(() => {
+
+                number--;
+
+                if (number > 0) {
+
+                    countdown.textContent =
+                        number;
+
+                } else {
+
+                    clearInterval(timer);
+
+                    countdown.textContent = "";
+
+                    capturePhoto();
+
+                }
+
+            }, 1000);
+
+    }
+
+
+    function capturePhoto() {
+
+        const width = video.videoWidth;
+
+        const height = video.videoHeight;
+
+        if (!width || !height) {
+
+            message.textContent =
+                "Camera is still loading...";
+
+            return;
+
+        }
+
+        canvas.width = width;
+
+        canvas.height = height;
+
+        const ctx =
+            canvas.getContext("2d");
+
+        if (facingMode === "user") {
+
+            ctx.translate(width, 0);
+
+            ctx.scale(-1, 1);
+
+        }
+
+        ctx.drawImage(
+            video,
+            0,
+            0,
+            width,
+            height
+        );
+
+        const image =
+            canvas.toDataURL(
+                "image/jpeg",
+                0.92
+            );
+
+        photos.push(image);
+
+        showPhoto(
+            photos.length,
+            image
+        );
+
+        flash.classList.remove("active");
+
+        void flash.offsetWidth;
+
+        flash.classList.add("active");
+
+        if (photos.length === 4) {
+
+            message.textContent =
+                "🎉 Your strip is ready!";
+
+        } else {
+
+            message.textContent =
+                `${photos.length}/4 photos captured`;
+
+        }
+
+    }
+
+
+    function showPhoto(number, image) {
+
+        const box =
+            document.getElementById(
+                "photo" + number
+            );
+
+        box.innerHTML = "";
+
+        const img =
+            document.createElement("img");
+
+        img.src = image;
+
+        box.appendChild(img);
+
+    }
+
+
+    function stopCamera() {
+
+        if (stream) {
+
+            stream.getTracks().forEach(
+                track => track.stop()
+            );
+
+            stream = null;
+
+            video.srcObject = null;
+
+            message.textContent =
+                "Camera stopped.";
+
+        }
+
+    }
+
+
+    window.addEventListener(
+        "beforeunload",
+        stopCamera
+    );
+
+
+    startCamera();
+
+</script>
+
+</body>
+</html>
